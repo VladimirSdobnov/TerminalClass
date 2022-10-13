@@ -23,7 +23,7 @@ int main() {
 
 	printf("\nYou enter str <%s> and it's length %d\n", str, realsize);
 
-	printf("and now we deleated all str witout first element)");
+	printf("and now we deleated all str witout first element)\n");
 	str[1] = '\0';
 	printf("%s", str);
 
