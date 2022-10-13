@@ -21,7 +21,11 @@ int main() {
 		realsize += 1;
 	}
 
-	printf("\nYou enter str <%s> and it's length %d", str, realsize);
+	printf("\nYou enter str <%s> and it's length %d\n", str, realsize);
+
+	printf("and now we deleated all str witout first element)");
+	str[1] = '\0';
+	printf("%s", str);
 
 	free(str);
 	return 0;
