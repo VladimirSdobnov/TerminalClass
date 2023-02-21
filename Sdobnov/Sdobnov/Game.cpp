@@ -59,10 +59,11 @@ private:
 	}
 	void shuffle() {
 		for (int i = 0; i < quant_par * 2; i ++) {
-			int x = rand() % (quant_par * 2) + 1;
-			while (x == i) {
-				x = rand() % (quant_par * 2) + 1;
-			}
+			int x;
+			do {
+				x = rand() % (quant_par * 2);
+			} while (x == i);
+
 			std::swap(cards[i], cards[x]);
 		}
 	}
@@ -139,7 +140,8 @@ public:
 				}
 				else { choosen_card = choose_pos; }
 			}
-			if (check_game(true_choose, 26)) {
+			if (check_game(true_choose, quant_par * 2)) {
+				system("cls");
 				cursorPos = { 0, 3 };
 				SetConsoleCursorPosition(hStdOut, cursorPos);
 				std::cout << "You are WINNER!!!!\n";

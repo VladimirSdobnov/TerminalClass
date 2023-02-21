@@ -1,3 +1,7 @@
 ﻿  Game.cpp
-E:\Visual Studio 2022\repos\TerminalClass\Sdobnov\Sdobnov\Game.cpp(159,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Sdobnov.vcxproj -> E:\Visual Studio 2022\repos\TerminalClass\Sdobnov\x64\Debug\Sdobnov.exe
+C:\Users\itmm-2213-a\Documents\TerminalClass\Sdobnov\Sdobnov\Game.cpp(161,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Mines.cpp
+C:\Users\itmm-2213-a\Documents\TerminalClass\Sdobnov\Sdobnov\Mines.cpp(14,11): error C2059: синтаксическая ошибка: )
+C:\Users\itmm-2213-a\Documents\TerminalClass\Sdobnov\Sdobnov\Mines.cpp(24,1): error C2660: Mines::set_fields: функция не принимает 2 аргументов
+C:\Users\itmm-2213-a\Documents\TerminalClass\Sdobnov\Sdobnov\Mines.cpp(41,7): message : см. объявление "Mines::set_fields"
+  Создание кода...
