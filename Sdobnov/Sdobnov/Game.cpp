@@ -166,4 +166,6 @@ int main() {
 	}
 	Game game(quant_pair);
 	game.Strat_game();
+	system("cls");
+	printf("%c%c%c\n%c%c%c", 218, 196, 191, 192, 196, 217);
 }
