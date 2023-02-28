@@ -16,7 +16,7 @@
 
 
 class Mines {
-	char field[6][6];
+	char field[100][100];
 	int quant_mines;
 	int len, wid;
 public:
@@ -34,7 +34,7 @@ public:
 			}
 		}
 	}
-	Mines(int _quant_mines = 1, int _len = 3, int _wid = 3) {
+	Mines(int _quant_mines, int _len, int _wid) {
 		quant_mines = _quant_mines;
 		len = _len;
 		wid = _wid;
@@ -201,11 +201,12 @@ public:
 				cursorPos = { _x, _y};
 				SetConsoleCursorPosition(hStdOut, cursorPos);
 				std::cout << field[choose_pos_x][choose_pos_y];
-				if (field[choose_pos_x][choose_pos_y] == 15) {
+				if (field[choose_pos_x][choose_pos_y] == 15 || field[choose_pos_x][choose_pos_y] == 0) {
 					exit_flag = 1;
-					system("cls");
 					cursorPos = { 0, 0 };
 					SetConsoleCursorPosition(hStdOut, cursorPos);
+					system("pause");
+					system("cls");
 					std::cout << "BOOOOOM!!!!\n";
 					system("pause");
 				}
@@ -214,7 +215,10 @@ public:
 				cursorPos = { _x, _y };
 				SetConsoleCursorPosition(hStdOut, cursorPos);
 				printf("%c", 20);
-				if (field[choose_pos_x][choose_pos_y] == 15) { quant_mines -= 1; }
+				if (field[choose_pos_x][choose_pos_y] == 15) { 
+					quant_mines -= 1;
+					field[choose_pos_x][choose_pos_y] = 0;
+				}
 				if (quant_mines == 0) {
 					exit_flag = 1;
 					system("cls");
@@ -234,6 +238,6 @@ public:
 
 int main() {
 	srand(time(0));
-	Mines field(3, 6, 4);
+	Mines field(1010, 100, 100);
 	field.start_game();
 }

@@ -1,1 +1,3 @@
-﻿  Sdobnov.vcxproj -> E:\Visual Studio 2022\repos\TerminalClass\Sdobnov\x64\Debug\Sdobnov.exe
+﻿  Game.cpp
+C:\Users\itmm-2213-a\source\repos\Termunal\TerminalClass\Sdobnov\Sdobnov\Game.cpp(209,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Sdobnov.vcxproj -> C:\Users\itmm-2213-a\source\repos\Termunal\TerminalClass\Sdobnov\x64\Debug\Sdobnov.exe

@@ -9,6 +9,9 @@
 #define KEY_ARROW_LEFT 75
 #define KEY_ENTER 13
 #define KEY_ESCAPE 27
+#define MAX_CARDS 26
+
+enum ERRORS {OUT_OF_RANGE};
 
 void null_mass(bool* mass, int size) {
 	for (int i = 0; i < size; i++) { mass[i] = 0; }
@@ -25,7 +28,7 @@ bool check_game(bool* mass, int size) {
 
 class Game {
 private:
-	char cards[26];
+	char cards[MAX_CARDS];
 	int quant_par;
 public:
 	Game() {
@@ -57,6 +60,7 @@ private:
 			else if (i / 2 + 2 == 14) { cards[i] = 'A'; cards[i + 1] = 'A'; }
 		}
 	}
+
 	void shuffle() {
 		for (int i = 0; i < quant_par * 2; i ++) {
 			int x;
@@ -67,8 +71,76 @@ private:
 			std::swap(cards[i], cards[x]);
 		}
 	}
+
+	void create_inter() {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		COORD cursorPos;
+
+		for (int i = 0; i < quant_par * 2; i++) {
+			short x = i * 4;
+			cursorPos = { x, 0 };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			std::cout << "[  ]";
+		}
+	}
+
+	void cursor_move(COORD* cursorPos, short* choose_pos, int* iKey) {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		while (*iKey != KEY_ENTER && *iKey != KEY_ESCAPE) {
+			short _x = 0;
+			switch (*iKey) {
+			case KEY_ARROW_LEFT:
+				_x = *choose_pos * 4 + 1;
+				*cursorPos = { _x, 1 };
+				SetConsoleCursorPosition(hStdOut, *cursorPos);
+				std::cout << " ";
+				*choose_pos -= 1;
+				break;
+			case KEY_ARROW_RIGHT:
+				_x = *choose_pos * 4 + 1;
+				*cursorPos = { _x, 1 };
+				SetConsoleCursorPosition(hStdOut, *cursorPos);
+				std::cout << " ";
+				*choose_pos += 1;
+				break;
+			}
+
+			if (*choose_pos < 0) { *choose_pos = quant_par * 2 - 1; }
+			if (*choose_pos > quant_par * 2 - 1) { *choose_pos = 0; }
+
+			short x = *choose_pos * 4 + 1;
+			*cursorPos = { x, 1 };
+			SetConsoleCursorPosition(hStdOut, *cursorPos);
+			std::cout << "^";
+
+			*iKey = _getch();
+		}
+	}
+
+	void open_card(COORD* cursorPos, short* choose_pos) {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		short x;
+		x = *choose_pos * 4 + 1;
+		*cursorPos = { x, 0 };
+		SetConsoleCursorPosition(hStdOut, *cursorPos);
+		if (cards[*choose_pos] == ':') {
+			std::cout << "10";
+		}
+		else {
+			std::cout << cards[*choose_pos];
+		}
+		*cursorPos = { 0, 3 };
+		SetConsoleCursorPosition(hStdOut, *cursorPos);
+		system("pause");
+	}
+
+	void check_pair(COORD* cursorPos, short* choose_pos, short* choosen_card, bool* true_choose) {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	}
+
 public:
-	void Strat_game() {
+	void Start_game() {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		CONSOLE_CURSOR_INFO structCursorInfo;
 		GetConsoleCursorInfo(hStdOut, &structCursorInfo);
@@ -80,61 +152,37 @@ public:
 		int iKey;
 		int exit_flag = 0;
 		short choosen_card = 200;
-		bool true_choose[26];
-		null_mass(true_choose, 26);
+		bool true_choose[MAX_CARDS];
+		null_mass(true_choose, MAX_CARDS);
 		COORD cursorPos;
 
+		create_inter();
+
 		while (!exit_flag) {
-			system("cls");
 			iKey = 67;
-			int open_card = 0;
 			cursorPos = { 0, 0 };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
 
-			while (iKey != KEY_ENTER && iKey != KEY_ESCAPE) {
-				switch (iKey) {
-				case KEY_ARROW_LEFT:
-					choose_pos--;
-					break;
-				case KEY_ARROW_RIGHT:
-					choose_pos++;
-					break;
-				}
-				system("cls");
+			cursor_move(&cursorPos, &choose_pos, &iKey);
 
-				if (choose_pos < 0) { choose_pos = quant_par * 2 - 1; }
-				if (choose_pos > quant_par * 2 - 1) { choose_pos = 0; }
-
-				for (int i = 0; i < quant_par * 2; i++) {
-					short x = i * 3;
-					cursorPos = { x, 0 };
-					SetConsoleCursorPosition(hStdOut, cursorPos);
-					if (true_choose[i] == 1 || choosen_card == i) { std::cout << "[" << cards[i] << "]"; }
-					else { std::cout << "[ ]"; }
-				}
-
-				short x = choose_pos * 3 + 1;
-				cursorPos = { x, 1 };
-				SetConsoleCursorPosition(hStdOut, cursorPos);
-				std::cout << "^";
-
-				iKey = _getch();
-
-			}
 			if (iKey == KEY_ESCAPE) { exit_flag = 1; }
 			else {
-				short x = choose_pos * 3 + 1;
-				cursorPos = { x, 0 };
-				SetConsoleCursorPosition(hStdOut, cursorPos);
-				std::cout << cards[choose_pos];
-				cursorPos = { 0, 3 };
-				SetConsoleCursorPosition(hStdOut, cursorPos);
-				system("pause");
-				if (choosen_card < 30) {
+				short x;
+				x = choose_pos * 4 + 1;
+				open_card(&cursorPos, &choose_pos);
+				if (choosen_card < 200) {
 					if (cards[choose_pos] == cards[choosen_card] && choosen_card != choose_pos) {
 						true_choose[choose_pos] = 1;
 						true_choose[choosen_card] = 1;
-						
+					}
+					else {
+						cursorPos = { x, 0 };
+						SetConsoleCursorPosition(hStdOut, cursorPos);
+						std::cout << "  ";
+						x = choosen_card * 4 + 1;
+						cursorPos = { x, 0 };
+						SetConsoleCursorPosition(hStdOut, cursorPos);
+						std::cout << "  ";
 					}
 					choosen_card = 200;
 				}
@@ -160,12 +208,10 @@ public:
 int main() {
 	srand(time(0));
 	int quant_pair = 0;
-	while (quant_pair < 1 || quant_pair > 13) {
+	while (quant_pair < 1 || quant_pair > MAX_CARDS / 2) {
 		std::cout << "Enter quant of pair: ";
 		std::cin >> quant_pair;
 	}
 	Game game(quant_pair);
-	game.Strat_game();
-	system("cls");
-	printf("%c%c%c\n%c%c%c", 218, 196, 191, 192, 196, 217);
+	game.Start_game();
 }
