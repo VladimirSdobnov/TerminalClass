@@ -209,8 +209,13 @@ int main() {
 	srand(time(0));
 	int quant_pair = 0;
 	while (quant_pair < 1 || quant_pair > MAX_CARDS / 2) {
+		system("cls");
 		std::cout << "Enter quant of pair: ";
 		std::cin >> quant_pair;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.get();
+		}
 	}
 	Game game(quant_pair);
 	game.Start_game();

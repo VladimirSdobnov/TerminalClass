@@ -238,6 +238,6 @@ public:
 
 int main() {
 	srand(time(0));
-	Mines field(1010, 100, 100);
+	Mines field(30, 10, 10);
 	field.start_game();
 }
