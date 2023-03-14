@@ -11,7 +11,6 @@
 #define KEY_ESCAPE 27
 #define MAX_CARDS 26
 
-enum ERRORS {OUT_OF_RANGE};
 
 void null_mass(bool* mass, int size) {
 	for (int i = 0; i < size; i++) { mass[i] = 0; }
@@ -118,6 +117,7 @@ private:
 	}
 
 	void open_card(COORD* cursorPos, short* choose_pos) {
+		if (*choose_pos < 0 || *choose_pos > quant_par * 2 - 1) { throw std::out_of_range("Неправильный индекс в функции открытия карты"); }
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		short x;
 		x = *choose_pos * 4 + 1;
@@ -164,37 +164,43 @@ public:
 			SetConsoleCursorPosition(hStdOut, cursorPos);
 
 			cursor_move(&cursorPos, &choose_pos, &iKey);
+			try {
+				if (iKey == KEY_ESCAPE) { exit_flag = 1; }
+				else {
+					short x;
+					x = choose_pos * 4 + 1;
 
-			if (iKey == KEY_ESCAPE) { exit_flag = 1; }
-			else {
-				short x;
-				x = choose_pos * 4 + 1;
-				open_card(&cursorPos, &choose_pos);
-				if (choosen_card < 200) {
-					if (cards[choose_pos] == cards[choosen_card] && choosen_card != choose_pos) {
-						true_choose[choose_pos] = 1;
-						true_choose[choosen_card] = 1;
+					open_card(&cursorPos, &choose_pos);
+
+					if (choosen_card < 200) {
+						if (cards[choose_pos] == cards[choosen_card] && choosen_card != choose_pos) {
+							true_choose[choose_pos] = 1;
+							true_choose[choosen_card] = 1;
+						}
+						else {
+							cursorPos = { x, 0 };
+							SetConsoleCursorPosition(hStdOut, cursorPos);
+							std::cout << "  ";
+							x = choosen_card * 4 + 1;
+							cursorPos = { x, 0 };
+							SetConsoleCursorPosition(hStdOut, cursorPos);
+							std::cout << "  ";
+						}
+						choosen_card = 200;
 					}
-					else {
-						cursorPos = { x, 0 };
-						SetConsoleCursorPosition(hStdOut, cursorPos);
-						std::cout << "  ";
-						x = choosen_card * 4 + 1;
-						cursorPos = { x, 0 };
-						SetConsoleCursorPosition(hStdOut, cursorPos);
-						std::cout << "  ";
-					}
-					choosen_card = 200;
+					else { choosen_card = choose_pos; }
 				}
-				else { choosen_card = choose_pos; }
+				if (check_game(true_choose, quant_par * 2)) {
+					system("cls");
+					cursorPos = { 0, 3 };
+					SetConsoleCursorPosition(hStdOut, cursorPos);
+					std::cout << "You are WINNER!!!!\n";
+					system("pause");
+					exit_flag = 1;
+				}
 			}
-			if (check_game(true_choose, quant_par * 2)) {
-				system("cls");
-				cursorPos = { 0, 3 };
-				SetConsoleCursorPosition(hStdOut, cursorPos);
-				std::cout << "You are WINNER!!!!\n";
-				system("pause");
-				exit_flag = 1;
+			catch (std::out_of_range) {
+				//поменяйте выбранную позицию;
 			}
 		}
 		system("cls");

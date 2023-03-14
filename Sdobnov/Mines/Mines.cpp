@@ -24,7 +24,7 @@ public:
 		len = 3;
 		wid = 3;
 		quant_mines = 1;
-		set_fields( len, wid, quant_mines);
+		generate_fields( len, wid, quant_mines);
 	}
 	Mines(Mines& _mines) {
 		quant_mines = _mines.quant_mines;
@@ -38,10 +38,10 @@ public:
 		quant_mines = _quant_mines;
 		len = _len;
 		wid = _wid;
-		set_fields(len, wid, quant_mines);
+		generate_fields(len, wid, quant_mines);
 	}
 private:
-	void set_fields(int len, int wid, int quant_mines) {
+	void generate_fields(int len, int wid, int quant_mines) {
 		for (int i = 0; i < len; i++) {
 			for (int j = 0; j < wid; j++) {
 				field[i][j] = '0';
