@@ -13,24 +13,54 @@
 #define KEY_SPACE 32
 #define KEY_ESCAPE 27
 #define MINE_CODE 15
+#define FLAG_CODE 20
 
 
 class Mines {
-	char field[100][100];
+	char** field;
+	short int** bool_field;
 	int quant_mines;
 	int len, wid;
 public:
 	Mines() {
 		len = 3;
 		wid = 3;
+		field = new char* [len];
+		for (int i = 0; i < len; i++) {
+			field[i] = new char[wid];
+			for (int j = 0; j < wid; j++) {
+				field[i][j] = '0';
+			}
+		}
+		bool_field = new short int* [len];
+		for (int i = 0; i < len; i++) {
+			bool_field[i] = new short int[wid];
+			for (int j = 0; j < wid; j++) {
+				bool_field[i][j] = 0;
+			}
+		}
 		quant_mines = 1;
-		set_fields( len, wid, quant_mines);
+
+		set_fields();
 	}
 	Mines(Mines& _mines) {
+		len = _mines.len;
+		wid = _mines.wid;
 		quant_mines = _mines.quant_mines;
-		for (int i = 0; i < _mines.len; i++) {
-			for (int j = 0; j < _mines.wid; j++) {
+		field = new char* [len];
+		for (int i = 0; i < len; i++) {
+			field[i] = new char[wid];
+		}
+		for (int i = 0; i < len; i++) {
+			for (int j = 0; j < wid; j++) {
 				field[i][j] = _mines.field[i][j];
+			}
+		}
+		bool_field = new short int* [len];
+		for (int i = 0; i < len; i++) {
+			bool_field[i] = new short int[wid];
+			for (int j = 0; j < wid; j++) {
+				bool_field[i][j] = _mines.bool_field[i][j];
 			}
 		}
 	}
@@ -38,15 +68,33 @@ public:
 		quant_mines = _quant_mines;
 		len = _len;
 		wid = _wid;
-		set_fields(len, wid, quant_mines);
-	}
-private:
-	void set_fields(int len, int wid, int quant_mines) {
+		field = new char* [len];
 		for (int i = 0; i < len; i++) {
+			field[i] = new char[wid];
 			for (int j = 0; j < wid; j++) {
 				field[i][j] = '0';
 			}
 		}
+		bool_field = new short int* [len];
+		for (int i = 0; i < len; i++) {
+			bool_field[i] = new short int[wid];
+			for (int j = 0; j < wid; j++) {
+				bool_field[i][j] = 0;
+			}
+		}
+
+		set_fields();
+	}
+	~Mines() {
+		for (int i = 0; i < len; i++) {
+			delete[] field[i];
+			delete[] bool_field[i];
+		}
+		delete[] field;
+		delete[] bool_field;
+	}
+private:
+	void set_fields() {
 		for (int i = 0; i < quant_mines; i++) {
 			int x;
 			int y;
@@ -71,7 +119,7 @@ private:
 			}
 		}
 	}
-	void create_inter(int len, int wid) {
+	void create_inter() {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 
@@ -127,7 +175,7 @@ private:
 			}
 		}
 	}
-	void cursor_move(int len, int wid, short* choose_pos_x, short* choose_pos_y, int* iKey) {
+	void cursor_move(short* choose_pos_x, short* choose_pos_y, int* iKey) {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 		short x, y;
@@ -192,9 +240,21 @@ private:
 		cursorPos = { x, y };
 		SetConsoleCursorPosition(hStdOut, cursorPos);
 		std::cout << field[choose_pos_x][choose_pos_y];
-		if (field[choose_pos_x][choose_pos_y] == MINE_CODE || field[choose_pos_x][choose_pos_y] == 0) { return TRUE; }
+		bool_field[choose_pos_x][choose_pos_y] = 1;
+		if (field[choose_pos_x][choose_pos_y] == '0') {
+			if (choose_pos_y + 1 < wid && bool_field[choose_pos_x][choose_pos_y + 1] == 0) { open_cell(choose_pos_x, choose_pos_y + 1); }
+			if (choose_pos_y - 1 >= 0 && bool_field[choose_pos_x][choose_pos_y - 1] == 0) { open_cell(choose_pos_x, choose_pos_y - 1); }
+			if (choose_pos_x + 1 < len && bool_field[choose_pos_x + 1][choose_pos_y] == 0) { open_cell(choose_pos_x + 1, choose_pos_y); }
+			if (choose_pos_x - 1 >= 0 && bool_field[choose_pos_x - 1][choose_pos_y] == 0) { open_cell(choose_pos_x - 1, choose_pos_y); }
+			if (choose_pos_x + 1 < len && choose_pos_y + 1 < wid && bool_field[choose_pos_x + 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y + 1); }
+			if (choose_pos_y - 1 >= 0 && choose_pos_x - 1 >= 0 && bool_field[choose_pos_x - 1][choose_pos_y - 1] == 0) { open_cell(choose_pos_x - 1, choose_pos_y - 1); }
+			if (choose_pos_x + 1 < len && choose_pos_y - 1 >= 0 && bool_field[choose_pos_x + 1][choose_pos_y - 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y - 1); }
+			if (choose_pos_x - 1 >= 0 && choose_pos_y + 1 < wid && bool_field[choose_pos_x - 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x - 1, choose_pos_y + 1); }
+		}
+		if (field[choose_pos_x][choose_pos_y] == MINE_CODE) { return TRUE; }
 		else { return FALSE; }
 	}
+
 	void set_flag(short choose_pos_x, short choose_pos_y) {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
@@ -204,10 +264,19 @@ private:
 
 		cursorPos = { x, y };
 		SetConsoleCursorPosition(hStdOut, cursorPos);
-		printf("%c", 20);
-		if (field[choose_pos_x][choose_pos_y] == 15) {
-			quant_mines -= 1;
-			field[choose_pos_x][choose_pos_y] = 0;
+		if (bool_field[choose_pos_x][choose_pos_y] == 0) {
+			printf("%c", FLAG_CODE);
+			bool_field[choose_pos_x][choose_pos_y] = -1;
+			if (field[choose_pos_x][choose_pos_y] == MINE_CODE) {
+				quant_mines -= 1;
+			}
+		}
+		else if (bool_field[choose_pos_x][choose_pos_y] == -1) {
+			printf(" ");
+			bool_field[choose_pos_x][choose_pos_y] = 0;
+			if (field[choose_pos_x][choose_pos_y] == MINE_CODE) {
+				quant_mines += 1;
+			}
 		}
 	}
 	void check_game(bool* exit_flag) {
@@ -246,14 +315,14 @@ public:
 		bool exit_flag = FALSE;
 		COORD cursorPos;
 
-		create_inter(len, wid);
+		create_inter();
 
 		while (!exit_flag) {
 			iKey = 67;
 			cursorPos = { 0, 0 };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
 
-			cursor_move(len, wid, &choose_pos_x, &choose_pos_y, &iKey);
+			cursor_move(&choose_pos_x, &choose_pos_y, &iKey);
 
 			if (iKey == KEY_ENTER) { exit_flag = open_cell(choose_pos_x, choose_pos_y); }
 			else if (iKey == KEY_SPACE) { set_flag(choose_pos_x, choose_pos_y); }
