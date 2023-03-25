@@ -16,26 +16,27 @@
 #define FLAG_CODE 20
 
 
+
 class Mines {
 	char** field;
 	short int** bool_field;
 	int quant_mines;
-	int len, wid;
+	int wid, len;
 public:
 	Mines() {
-		len = 3;
 		wid = 3;
-		field = new char* [len];
-		for (int i = 0; i < len; i++) {
-			field[i] = new char[wid];
-			for (int j = 0; j < wid; j++) {
+		len = 3;
+		field = new char* [wid];
+		for (int i = 0; i < wid; i++) {
+			field[i] = new char[len];
+			for (int j = 0; j < len; j++) {
 				field[i][j] = '0';
 			}
 		}
-		bool_field = new short int* [len];
-		for (int i = 0; i < len; i++) {
-			bool_field[i] = new short int[wid];
-			for (int j = 0; j < wid; j++) {
+		bool_field = new short int* [wid];
+		for (int i = 0; i < wid; i++) {
+			bool_field[i] = new short int[len];
+			for (int j = 0; j < len; j++) {
 				bool_field[i][j] = 0;
 			}
 		}
@@ -44,41 +45,41 @@ public:
 		set_fields();
 	}
 	Mines(Mines& _mines) {
-		len = _mines.len;
 		wid = _mines.wid;
+		len = _mines.len;
 		quant_mines = _mines.quant_mines;
-		field = new char* [len];
-		for (int i = 0; i < len; i++) {
-			field[i] = new char[wid];
+		field = new char* [wid];
+		for (int i = 0; i < wid; i++) {
+			field[i] = new char[len];
 		}
-		for (int i = 0; i < len; i++) {
-			for (int j = 0; j < wid; j++) {
+		for (int i = 0; i < wid; i++) {
+			for (int j = 0; j < len; j++) {
 				field[i][j] = _mines.field[i][j];
 			}
 		}
-		bool_field = new short int* [len];
-		for (int i = 0; i < len; i++) {
-			bool_field[i] = new short int[wid];
-			for (int j = 0; j < wid; j++) {
+		bool_field = new short int* [wid];
+		for (int i = 0; i < wid; i++) {
+			bool_field[i] = new short int[len];
+			for (int j = 0; j < len; j++) {
 				bool_field[i][j] = _mines.bool_field[i][j];
 			}
 		}
 	}
 	Mines(int _quant_mines, int _len, int _wid) {
 		quant_mines = _quant_mines;
-		len = _len;
-		wid = _wid;
-		field = new char* [len];
-		for (int i = 0; i < len; i++) {
-			field[i] = new char[wid];
-			for (int j = 0; j < wid; j++) {
+		wid = _len;
+		len = _wid;
+		field = new char* [wid];
+		for (int i = 0; i < wid; i++) {
+			field[i] = new char[len];
+			for (int j = 0; j < len; j++) {
 				field[i][j] = '0';
 			}
 		}
-		bool_field = new short int* [len];
-		for (int i = 0; i < len; i++) {
-			bool_field[i] = new short int[wid];
-			for (int j = 0; j < wid; j++) {
+		bool_field = new short int* [wid];
+		for (int i = 0; i < wid; i++) {
+			bool_field[i] = new short int[len];
+			for (int j = 0; j < len; j++) {
 				bool_field[i][j] = 0;
 			}
 		}
@@ -86,7 +87,7 @@ public:
 		set_fields();
 	}
 	~Mines() {
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < wid; i++) {
 			delete[] field[i];
 			delete[] bool_field[i];
 		}
@@ -99,21 +100,21 @@ private:
 			int x;
 			int y;
 			do {
-				x = rand() % len;
-				y = rand() % wid;
+				x = rand() % wid;
+				y = rand() % len;
 			} while (field[x][y] == MINE_CODE);
 			field[x][y] = MINE_CODE;
 		}
-		for (int i = 0; i < len; i++) {
-			for (int j = 0; j < wid; j++) {
+		for (int i = 0; i < wid; i++) {
+			for (int j = 0; j < len; j++) {
 				if (field[i][j] != 15) {
-					if (i + 1 < len && field[i + 1][j] == MINE_CODE) { field[i][j] += 1; }
-					if (i + 1 < len && j + 1 < wid && field[i + 1][j + 1] == MINE_CODE) { field[i][j] += 1; }
-					if (i + 1 < len && j - 1 > -1 && field[i + 1][j - 1] == MINE_CODE) { field[i][j] += 1; }
+					if (i + 1 < wid && field[i + 1][j] == MINE_CODE) { field[i][j] += 1; }
+					if (i + 1 < wid && j + 1 < len && field[i + 1][j + 1] == MINE_CODE) { field[i][j] += 1; }
+					if (i + 1 < wid && j - 1 > -1 && field[i + 1][j - 1] == MINE_CODE) { field[i][j] += 1; }
 					if (i - 1 > -1 && field[i - 1][j] == MINE_CODE) { field[i][j] += 1; }
-					if (i - 1 > -1 && j + 1 < wid && field[i - 1][j + 1] == MINE_CODE) { field[i][j] += 1; }
+					if (i - 1 > -1 && j + 1 < len && field[i - 1][j + 1] == MINE_CODE) { field[i][j] += 1; }
 					if (i - 1 > -1 && j - 1 > -1 && field[i - 1][j - 1] == MINE_CODE) { field[i][j] += 1; }
-					if (j + 1 < wid && field[i][j + 1] == MINE_CODE) { field[i][j] += 1; }
+					if (j + 1 < len && field[i][j + 1] == MINE_CODE) { field[i][j] += 1; }
 					if (j - 1 > -1 && field[i][j - 1] == MINE_CODE) { field[i][j] += 1; }
 				}
 			}
@@ -123,59 +124,59 @@ private:
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 
-		for (short i = 0; i < len * 4 + 1; i++) {
+		for (short i = 0; i < wid * 4 + 1; i++) {
 			if (i % 4 != 0) {
-				for (short j = 0; j < wid * 4 + 1; j += 4) {
+				for (short j = 0; j < len * 4 + 1; j += 4) {
 					cursorPos = { i, j };
 					SetConsoleCursorPosition(hStdOut, cursorPos);
 					printf("%c", 196);
 				}
 			}
-			else if (i > 0 && i < len * 4) {
-				for (short j = 0; j < wid * 4 + 1; j++) {
+			else if (i > 0 && i < wid * 4) {
+				for (short j = 0; j < len * 4 + 1; j++) {
 					cursorPos = { i, j };
 					SetConsoleCursorPosition(hStdOut, cursorPos);
 					if (j % 4 != 0) {
 						printf("%c", 179);
 					}
-					else if (j > 0 && j < wid * 4) {
+					else if (j > 0 && j < len * 4) {
 						printf("%c", 197);
 					}
 					if (j == 0) { printf("%c", 194); }
-					if (j == wid * 4) { printf("%c", 193); }
+					if (j == len * 4) { printf("%c", 193); }
 				}
 			}
 			if (i == 0) {
-				for (short j = 0; j < wid * 4 + 1; j++) {
+				for (short j = 0; j < len * 4 + 1; j++) {
 					cursorPos = { i, j };
 					SetConsoleCursorPosition(hStdOut, cursorPos);
 					if (j % 4 != 0) {
 						printf("%c", 179);
 					}
-					else if (j > 0 && j < wid * 4) {
+					else if (j > 0 && j < len * 4) {
 						printf("%c", 195);
 					}
 					if (j == 0) { printf("%c", 218); }
-					if (j == wid * 4) { printf("%c", 192); }
+					if (j == len * 4) { printf("%c", 192); }
 				}
 			}
-			if (i == len * 4) {
-				for (short j = 0; j < wid * 4 + 1; j++) {
+			if (i == wid * 4) {
+				for (short j = 0; j < len * 4 + 1; j++) {
 					cursorPos = { i, j };
 					SetConsoleCursorPosition(hStdOut, cursorPos);
 					if (j % 4 != 0) {
 						printf("%c", 179);
 					}
-					else if (j > 0 && j < wid * 4) {
+					else if (j > 0 && j < len * 4) {
 						printf("%c", 180);
 					}
 					if (j == 0) { printf("%c", 191); }
-					if (j == wid * 4) { printf("%c", 217); }
+					if (j == len * 4) { printf("%c", 217); }
 				}
 			}
 		}
 	}
-	void cursor_move(short* choose_pos_x, short* choose_pos_y, int* iKey) {
+	void cursor_move_field(short* choose_pos_x, short* choose_pos_y, int* iKey) {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 		short x, y;
@@ -216,14 +217,46 @@ private:
 				break;
 			}
 
-			if (*choose_pos_x < 0) { *choose_pos_x = len - 1; }
-			if (*choose_pos_x > len - 1) { *choose_pos_x = 0; }
-			if (*choose_pos_y < 0) { *choose_pos_y = wid - 1; }
-			if (*choose_pos_y > wid - 1) { *choose_pos_y = 0; }
+			if (*choose_pos_x < 0) { *choose_pos_x = wid - 1; }
+			if (*choose_pos_x > wid - 1) { *choose_pos_x = 0; }
+			if (*choose_pos_y < 0) { *choose_pos_y = len - 1; }
+			if (*choose_pos_y > len - 1) { *choose_pos_y = 0; }
 
 			short x = *choose_pos_x * 4 + 2;
 			short y = *choose_pos_y * 4 + 3;
 			cursorPos = { x, y };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			std::cout << "^";
+
+			*iKey = _getch();
+		}
+	}
+	void cursor_move_setting(short* choose_pos, int* iKey) {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		COORD cursorPos;
+		short x;
+
+		while (*iKey != KEY_ENTER) {
+			switch (*iKey) {
+			case KEY_ARROW_UP:
+				x = *choose_pos * 4 + 2;
+				cursorPos = { x, };
+				SetConsoleCursorPosition(hStdOut, cursorPos);
+				std::cout << " ";
+				break;
+			case KEY_ARROW_DOWN:
+				x = *choose_pos * 4 + 2;
+				cursorPos = { x, };
+				SetConsoleCursorPosition(hStdOut, cursorPos);
+				std::cout << " ";
+				break;
+			}
+
+			if (*choose_pos < 0) { *choose_pos = wid - 1; }
+			if (*choose_pos > wid - 1) { *choose_pos = 0; }
+
+			short x = *choose_pos * 4 + 2;
+			cursorPos = { x,  };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
 			std::cout << "^";
 
@@ -242,14 +275,14 @@ private:
 		std::cout << field[choose_pos_x][choose_pos_y];
 		bool_field[choose_pos_x][choose_pos_y] = 1;
 		if (field[choose_pos_x][choose_pos_y] == '0') {
-			if (choose_pos_y + 1 < wid && bool_field[choose_pos_x][choose_pos_y + 1] == 0) { open_cell(choose_pos_x, choose_pos_y + 1); }
+			if (choose_pos_y + 1 < len && bool_field[choose_pos_x][choose_pos_y + 1] == 0) { open_cell(choose_pos_x, choose_pos_y + 1); }
 			if (choose_pos_y - 1 >= 0 && bool_field[choose_pos_x][choose_pos_y - 1] == 0) { open_cell(choose_pos_x, choose_pos_y - 1); }
-			if (choose_pos_x + 1 < len && bool_field[choose_pos_x + 1][choose_pos_y] == 0) { open_cell(choose_pos_x + 1, choose_pos_y); }
+			if (choose_pos_x + 1 < wid && bool_field[choose_pos_x + 1][choose_pos_y] == 0) { open_cell(choose_pos_x + 1, choose_pos_y); }
 			if (choose_pos_x - 1 >= 0 && bool_field[choose_pos_x - 1][choose_pos_y] == 0) { open_cell(choose_pos_x - 1, choose_pos_y); }
-			if (choose_pos_x + 1 < len && choose_pos_y + 1 < wid && bool_field[choose_pos_x + 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y + 1); }
+			if (choose_pos_x + 1 < wid && choose_pos_y + 1 < len && bool_field[choose_pos_x + 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y + 1); }
 			if (choose_pos_y - 1 >= 0 && choose_pos_x - 1 >= 0 && bool_field[choose_pos_x - 1][choose_pos_y - 1] == 0) { open_cell(choose_pos_x - 1, choose_pos_y - 1); }
-			if (choose_pos_x + 1 < len && choose_pos_y - 1 >= 0 && bool_field[choose_pos_x + 1][choose_pos_y - 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y - 1); }
-			if (choose_pos_x - 1 >= 0 && choose_pos_y + 1 < wid && bool_field[choose_pos_x - 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x - 1, choose_pos_y + 1); }
+			if (choose_pos_x + 1 < wid && choose_pos_y - 1 >= 0 && bool_field[choose_pos_x + 1][choose_pos_y - 1] == 0) { open_cell(choose_pos_x + 1, choose_pos_y - 1); }
+			if (choose_pos_x - 1 >= 0 && choose_pos_y + 1 < len && bool_field[choose_pos_x - 1][choose_pos_y + 1] == 0) { open_cell(choose_pos_x - 1, choose_pos_y + 1); }
 		}
 		if (field[choose_pos_x][choose_pos_y] == MINE_CODE) { return TRUE; }
 		else { return FALSE; }
@@ -322,7 +355,7 @@ public:
 			cursorPos = { 0, 0 };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
 
-			cursor_move(&choose_pos_x, &choose_pos_y, &iKey);
+			cursor_move_field(&choose_pos_x, &choose_pos_y, &iKey);
 
 			if (iKey == KEY_ENTER) { exit_flag = open_cell(choose_pos_x, choose_pos_y); }
 			else if (iKey == KEY_SPACE) { set_flag(choose_pos_x, choose_pos_y); }
@@ -333,10 +366,115 @@ public:
 		system("cls");
 		std::cout << "Thanks for playing";
 	}
+	void setting() {
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		CONSOLE_CURSOR_INFO structCursorInfo;
+		GetConsoleCursorInfo(hStdOut, &structCursorInfo);
+		structCursorInfo.bVisible = FALSE;
+		SetConsoleCursorInfo(hStdOut, &structCursorInfo);
+		system("cls");
+
+		short choose_pos = 0;
+		int iKey;
+		bool exit_flag = FALSE;
+		COORD cursorPos;
+
+		std::cout << "Length of field:   \n";
+		std::cout << "Width of field:    \n";
+		std::cout << "Quantity of mines: ";
+
+		while (!exit_flag) {
+			iKey = 67;
+			cursorPos = { 0, 0 };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+		}
+	}
 };
+
+void cursor_move(std::string* menu_names, int menu_size, short* choose_pos, int* iKey) {
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD cursorPos;
+	short x;
+	while (*iKey != KEY_ENTER) {
+		switch (*iKey) {
+		case KEY_ARROW_UP:
+			cursorPos = { 0, *choose_pos };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			printf("  ");
+			x = menu_names[*choose_pos].length() + 4;
+			cursorPos = { x, *choose_pos };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			printf("  ");
+			(*choose_pos)--;
+			break;
+		case KEY_ARROW_DOWN:
+			cursorPos = { 0, *choose_pos };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			printf("  ");
+			x = menu_names[*choose_pos].length() + 4;
+			cursorPos = { x, *choose_pos };
+			SetConsoleCursorPosition(hStdOut, cursorPos);
+			printf("  ");
+			(*choose_pos)++;
+			break;
+		}
+		if (*choose_pos < 0) { *choose_pos = menu_size - 1; }
+		if (*choose_pos > menu_size - 1) { *choose_pos = 0; }
+		cursorPos = { 0, *choose_pos };
+		SetConsoleCursorPosition(hStdOut, cursorPos);
+		printf("<<");
+		x = menu_names[*choose_pos].length() + 4;
+		cursorPos = { x, *choose_pos };
+		SetConsoleCursorPosition(hStdOut, cursorPos);
+		printf(">>");
+		*iKey = _getch();
+	}
+
+}
+void constract_MainMenu() {
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO structCursorInfo;
+	GetConsoleCursorInfo(hStdOut, &structCursorInfo);
+	structCursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(hStdOut, &structCursorInfo);
+	system("cls");
+
+	std::string menu_names[3] = { "START", "SETTINGS", "EXIT" };
+	short choose_pos = 0;
+	int menu_size = 3;
+	int iKey;
+	int flag;
+	COORD cursorPos;
+	system("cls");
+	iKey = 67;
+	cursorPos = { 0, 0 };
+	SetConsoleCursorPosition(hStdOut, cursorPos);
+	for (short i = 0; i < menu_size; i++) {
+		cursorPos = { 3, i };
+		SetConsoleCursorPosition(hStdOut, cursorPos);
+		std::cout << menu_names[i];
+	}
+	cursor_move(menu_names, menu_size, &choose_pos, &iKey);
+
+	Mines field(4, 5, 6);
+
+	switch (choose_pos) {
+	case 0:
+		system("cls");
+		field.start_game();
+		break;
+	case 1:
+		system("cls");
+		field.setting();
+		break;
+	case 2:
+		system("cls");
+
+		break;
+	}
+}
 
 int main() {
 	srand(time(0));
-	Mines field(4, 5, 5);
-	field.start_game();
+	constract_MainMenu();
 }
