@@ -93,7 +93,29 @@ public:
 		delete[] bool_field;
 	}
 private:
+	void delete_field() {
+		for (int i = 0; i < len; i++) {
+			delete[] field[i];
+			delete[] bool_field[i];
+		}
+		delete[] field;
+		delete[] bool_field;
+	}
 	void set_fields() {
+		field = new char* [len];
+		for (int i = 0; i < len; i++) {
+			field[i] = new char[wid];
+			for (int j = 0; j < wid; j++) {
+				field[i][j] = '0';
+			}
+		}
+		bool_field = new short int* [len];
+		for (int i = 0; i < len; i++) {
+			bool_field[i] = new short int[wid];
+			for (int j = 0; j < wid; j++) {
+				bool_field[i][j] = 0;
+			}
+		}
 		for (int i = 0; i < quant_mines; i++) {
 			int x;
 			int y;
@@ -286,7 +308,7 @@ private:
 		if (field[choose_pos_x][choose_pos_y] == MINE_CODE) { return TRUE; }
 		else { return FALSE; }
 	}
-	void set_flag(short choose_pos_x, short choose_pos_y) {
+	void set_flag(short choose_pos_x, short choose_pos_y, int* check_quant_mine) {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 		short x, y;
@@ -299,18 +321,18 @@ private:
 			printf("%c", FLAG_CODE);
 			bool_field[choose_pos_x][choose_pos_y] = -1;
 			if (field[choose_pos_x][choose_pos_y] == MINE_CODE) {
-				quant_mines -= 1;
+				*check_quant_mine -= 1;
 			}
 		}
 		else if (bool_field[choose_pos_x][choose_pos_y] == -1) {
 			printf(" ");
 			bool_field[choose_pos_x][choose_pos_y] = 0;
 			if (field[choose_pos_x][choose_pos_y] == MINE_CODE) {
-				quant_mines += 1;
+				*check_quant_mine += 1;
 			}
 		}
 	}
-	void check_game(bool* exit_flag) {
+	void check_game(bool* exit_flag, int* check_quant_mine) {
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		COORD cursorPos;
 		if (*exit_flag == TRUE) {
@@ -321,7 +343,7 @@ private:
 			std::cout << "YOU LOSSER!!!\n";
 			system("pause");
 		}
-		if (quant_mines == 0) {
+		if (*check_quant_mine == 0) {
 			system("cls");
 			cursorPos = { 0, 0 };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
@@ -344,9 +366,12 @@ public:
 		short choose_pos_y = 0;
 		int iKey;
 		bool exit_flag = FALSE;
+		int check_quant_mine = quant_mines;
 		COORD cursorPos;
 
 		create_inter();
+		delete_field();
+		set_fields();
 
 		while (!exit_flag) {
 			iKey = 67;
@@ -356,10 +381,10 @@ public:
 			cursor_move_field(&choose_pos_x, &choose_pos_y, &iKey);
 
 			if (iKey == KEY_ENTER) { exit_flag = open_cell(choose_pos_x, choose_pos_y); }
-			else if (iKey == KEY_SPACE) { set_flag(choose_pos_x, choose_pos_y); }
+			else if (iKey == KEY_SPACE) { set_flag(choose_pos_x, choose_pos_y, &check_quant_mine); }
 			else if (iKey == KEY_ESCAPE) { exit_flag = 1; }
 
-			check_game(&exit_flag);
+			check_game(&exit_flag, &check_quant_mine);
 		}
 		system("cls");
 	}
@@ -382,8 +407,8 @@ public:
 			iKey = 67;
 			cursorPos = { 0, 0 };
 			SetConsoleCursorPosition(hStdOut, cursorPos);
-			std::cout << menu_names[0] << "   " << wid << "\n";
-			std::cout << menu_names[1] << "   " << len << "\n";
+			std::cout << menu_names[0] << "   " << len << "\n";
+			std::cout << menu_names[1] << "   " << wid << "\n";
 			std::cout << menu_names[2] << "   " << quant_mines << "\n";
 			std::cout << menu_names[3] << "   " << "YES";
 			cursor_move_setting(menu_names, menu_size, &choose_pos, &iKey);
@@ -408,13 +433,12 @@ public:
 					}
 				} while (_len < 1);
 				system("cls");
-
 				break;
 			case 1:
 				int _wid;
 				do {
 					system("cls");
-					std::cout << "Enter new length: ";
+					std::cout << "Enter new width: ";
 					std::cin >> _wid;
 					if (std::cin.fail()) {
 						std::cin.clear();
@@ -434,7 +458,7 @@ public:
 				int _quant_mines;
 				do {
 					system("cls");
-					std::cout << "Enter new length: ";
+					std::cout << "Enter new quant of mines: ";
 					std::cin >> _quant_mines;
 					if (std::cin.fail()) {
 						std::cin.clear();
@@ -464,16 +488,22 @@ public:
 	}
 	void set_len(int _len){
 		if (_len < 1) { throw 0; }
-		wid = _len;
+		delete_field();
+		len = _len;
+		set_fields();
 	}
 	void set_wid(int _wid){
 		if (_wid < 1) { throw 0; }
-		len = _wid;
+		delete_field();
+		wid = _wid;
+		set_fields();
 	}
 	void set_quant_mines(int _quant_mines){
 		if (_quant_mines < 1) { throw 0; }
 		if (_quant_mines > wid * len - 1) { throw 1; }
+		delete_field();
 		quant_mines = _quant_mines;
+		set_fields();
 	}
 };
 
