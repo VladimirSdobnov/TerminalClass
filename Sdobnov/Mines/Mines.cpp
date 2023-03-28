@@ -91,6 +91,8 @@ public:
 		}
 		delete[] field;
 		delete[] bool_field;
+		field = nullptr;
+		bool_field = nullptr;
 	}
 private:
 	void delete_field() {
