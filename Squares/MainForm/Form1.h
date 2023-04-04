@@ -1,5 +1,4 @@
 #pragma once
-#include "CTriangle.h"
 #include "Rational.h"
 
 namespace CppCLRWinformsProjekt {
@@ -48,10 +47,11 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button4;
+	private: System::Windows::Forms::Button^ plus;
+	private: System::Windows::Forms::Button^ minus;
+	private: System::Windows::Forms::Button^ multiplicate;
+	private: System::Windows::Forms::Button^ divizion;
+
 
 	private:
 		/// <summary>
@@ -67,7 +67,6 @@ namespace CppCLRWinformsProjekt {
 		void InitializeComponent(void)
 		{
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
@@ -76,15 +75,16 @@ namespace CppCLRWinformsProjekt {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->plus = (gcnew System::Windows::Forms::Button());
+			this->minus = (gcnew System::Windows::Forms::Button());
+			this->multiplicate = (gcnew System::Windows::Forms::Button());
+			this->divizion = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this->groupBox1->Controls->Add(this->button4);
+			this->groupBox1->Controls->Add(this->divizion);
 			this->groupBox1->Controls->Add(this->label4);
 			this->groupBox1->Controls->Add(this->textBox3);
 			this->groupBox1->Controls->Add(this->textBox4);
@@ -93,9 +93,9 @@ namespace CppCLRWinformsProjekt {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
 			this->groupBox1->Controls->Add(this->label1);
-			this->groupBox1->Controls->Add(this->button3);
-			this->groupBox1->Controls->Add(this->button2);
-			this->groupBox1->Controls->Add(this->button1);
+			this->groupBox1->Controls->Add(this->plus);
+			this->groupBox1->Controls->Add(this->minus);
+			this->groupBox1->Controls->Add(this->multiplicate);
 			this->groupBox1->Location = System::Drawing::Point(9, 10);
 			this->groupBox1->Margin = System::Windows::Forms::Padding(2);
 			this->groupBox1->Name = L"groupBox1";
@@ -104,15 +104,6 @@ namespace CppCLRWinformsProjekt {
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Главное меню";
-			// 
-			// button4
-			// 
-			this->button4->Location = System::Drawing::Point(268, 48);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(43, 20);
-			this->button4->TabIndex = 14;
-			this->button4->Text = L"/";
-			this->button4->UseVisualStyleBackColor = true;
 			// 
 			// label4
 			// 
@@ -185,38 +176,49 @@ namespace CppCLRWinformsProjekt {
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"Первое число";
 			// 
-			// button3
+			// plus
 			// 
-			this->button3->Location = System::Drawing::Point(219, 24);
-			this->button3->Margin = System::Windows::Forms::Padding(2);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(44, 20);
-			this->button3->TabIndex = 2;
-			this->button3->Text = L"+";
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click);
+			this->plus->Location = System::Drawing::Point(219, 24);
+			this->plus->Margin = System::Windows::Forms::Padding(2);
+			this->plus->Name = L"plus";
+			this->plus->Size = System::Drawing::Size(44, 20);
+			this->plus->TabIndex = 2;
+			this->plus->Text = L"+";
+			this->plus->UseVisualStyleBackColor = true;
+			this->plus->Click += gcnew System::EventHandler(this, &Form1::plus_Click);
 			// 
-			// button2
+			// minus
 			// 
-			this->button2->Location = System::Drawing::Point(219, 48);
-			this->button2->Margin = System::Windows::Forms::Padding(2);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(44, 20);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"-";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
+			this->minus->Location = System::Drawing::Point(219, 48);
+			this->minus->Margin = System::Windows::Forms::Padding(2);
+			this->minus->Name = L"minus";
+			this->minus->Size = System::Drawing::Size(44, 20);
+			this->minus->TabIndex = 1;
+			this->minus->Text = L"-";
+			this->minus->UseVisualStyleBackColor = true;
+			this->minus->Click += gcnew System::EventHandler(this, &Form1::minus_Click);
 			// 
-			// button1
+			// multiplicate
 			// 
-			this->button1->Location = System::Drawing::Point(267, 24);
-			this->button1->Margin = System::Windows::Forms::Padding(2);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(44, 21);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"*";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			this->multiplicate->Location = System::Drawing::Point(267, 24);
+			this->multiplicate->Margin = System::Windows::Forms::Padding(2);
+			this->multiplicate->Name = L"multiplicate";
+			this->multiplicate->Size = System::Drawing::Size(44, 21);
+			this->multiplicate->TabIndex = 0;
+			this->multiplicate->Text = L"*";
+			this->multiplicate->UseVisualStyleBackColor = true;
+			this->multiplicate->Click += gcnew System::EventHandler(this, &Form1::multiplicate_Click);
+			// 
+			// divizion
+			// 
+			this->divizion->Location = System::Drawing::Point(267, 48);
+			this->divizion->Margin = System::Windows::Forms::Padding(2);
+			this->divizion->Name = L"divizion";
+			this->divizion->Size = System::Drawing::Size(44, 20);
+			this->divizion->TabIndex = 14;
+			this->divizion->Text = L"/";
+			this->divizion->UseVisualStyleBackColor = true;
+			this->divizion->Click += gcnew System::EventHandler(this, &Form1::divizion_Click);
 			// 
 			// Form1
 			// 
@@ -233,7 +235,7 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void plus_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
 			textBox4->Text == "")
 			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
@@ -245,7 +247,7 @@ namespace CppCLRWinformsProjekt {
 			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
 		}
 	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void multiplicate_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
 			textBox4->Text == "")
 			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
@@ -258,24 +260,30 @@ namespace CppCLRWinformsProjekt {
 			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
 		}
 	}
-
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void minus_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
 			textBox4->Text == "")
-			MessageBox::Show(this, "Заполнены не все координаты треугольника!", "Сообщение",
+			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
 				MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		else {
-			CPoint A(int::Parse(textBox1->Text), int::Parse(textBox2->Text));
-			CPoint B(int::Parse(textBox3->Text), int::Parse(textBox4->Text));
-			//CPoint C(int::Parse(textBox5->Text), int::Parse(textBox6->Text));
-			//CTriangle ABC(A, B, C);
-			//float S = ABC.calculateS();
+			Rational A(int::Parse(textBox1->Text), int::Parse(textBox2->Text));
+			Rational B(int::Parse(textBox3->Text), int::Parse(textBox4->Text));
+			Rational Res = A - B;
 
-			//if (S == 0)
-				MessageBox::Show(this, "Вырожденный треугольник!", "Сообщение",
-					MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
+		}
+	}
+	private: System::Void divizion_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
+			textBox4->Text == "")
+			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
+				MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		else {
+			Rational A(int::Parse(textBox1->Text), int::Parse(textBox2->Text));
+			Rational B(int::Parse(textBox3->Text), int::Parse(textBox4->Text));
+			Rational Res = A / B;
 
-      //label4->Text = "Результат: площадь равна " + S;
+			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
 		}
 	}
 private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
