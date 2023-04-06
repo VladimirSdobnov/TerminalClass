@@ -2,47 +2,47 @@
 #include <stdlib.h>
 #include <time.h>
 
-class SNS {
+class FIO {
 	std::string surname;
 	std::string name;
 	std::string secondname;
 
-	SNS() {
+	FIO() {
 		surname = "";
 		name = "";
 		secondname = "";
 	}
-	SNS(std::string _surname, std::string _name, std::string _secondname) {
+	FIO(std::string _surname, std::string _name, std::string _secondname) {
 		surname = _surname;
 		name = _name;
 		secondname = _secondname;
 	}
-	SNS(const SNS& _sns) {
+	FIO(const FIO& _sns) {
 		name = _sns.name;
 		surname = _sns.surname;
 		secondname = _sns.secondname;
 	}
 
-	void swap(SNS& _sns) {
+	void swap(FIO& _sns) {
 		std::swap(name, _sns.name);
 		std::swap(surname, _sns.surname);
 		std::swap(secondname, _sns.secondname);
 	}
-	SNS& operator=(const SNS& _sns){
+	FIO& operator=(const FIO& _sns){
 		if (this != &_sns) {
-			SNS tmp(_sns);
+			FIO tmp(_sns);
 			this->swap(tmp);
 		}
 		return *this;
 	}
-	bool operator==(const SNS& _sns) const {
+	bool operator==(const FIO& _sns) const {
 		return (name == _sns.name && surname == _sns.surname && secondname == _sns.secondname);
 	}
-	bool operator!=(const SNS& _sns) const {
+	bool operator!=(const FIO& _sns) const {
 		return not((name == _sns.name && surname == _sns.surname && secondname == _sns.secondname));
 	}
-	bool operator>(const SNS& _sns) const;
-	bool operator<(const SNS& _sns) const;
+	bool operator>(const FIO& _sns) const;
+	bool operator<(const FIO& _sns) const;
 
 	void set_surname(const std::string _surname) {
 		surname = _surname;
@@ -129,7 +129,7 @@ class Date {
 };
 
 class Teacher {
-	SNS sns;
+	FIO sns;
 	Post post;
 	std::string scientific_title;
 	Date start_work_date;
@@ -139,6 +139,7 @@ class Teacher {
 
 class Department {
 	Teacher* teachers;
-	Teacher head_departmens;
+	int count;
+	Teacher* head_departmens;
 	Contact_details departmens_contact;
 };
