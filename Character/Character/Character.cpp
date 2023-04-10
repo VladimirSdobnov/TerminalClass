@@ -2,15 +2,64 @@
 #include <iostream>
 
 class Weapon{
-	int damage;
-	Weapon(std::string type_class);
-	Weapon& operator=(const Weapon& right);
+	int dmg;
+	float str_scale;
+	float dex_scale;
+public:
+	Weapon();
+	Weapon(std::string type_class) {
+		if (type_class == "warrior"){
+			dmg = 4;
+			str_scale = 1.5;
+			dex_scale = 1;
+		}
+		if (type_class == "archer"){
+
+		}
+	}
+	Weapon& operator=(const Weapon& right) {
+		Weapon tmp;
+		tmp.dmg = right.dmg;
+		tmp.str_scale = right.str_scale;
+		tmp.dex_scale = right.dex_scale;
+		return tmp;
+	}
+
+	int damage(int str, int dex) {
+		return dmg + dex * dex_scale + str * str_scale;
+	}
+	
 	friend Character;
 	friend Warrior;
 };
+
+
+
 class Armor{
-	Armor(std::string type_class);
-	Armor& operator=(const Armor& right);
+	int armor_class;
+	float str_scale;
+	float dex_scale;
+public:
+	Armor();
+	Armor(std::string type_class) {
+		if (type_class == "warrior") {
+			armor_class = 10;
+			str_scale = 1.5;
+			dex_scale = 1;
+		}
+	}
+
+	float block(int str, int dex) {
+		
+	}
+
+	Armor& operator=(const Armor& right) {
+		Armor tmp;
+		tmp.armor_class = right.armor_class;
+		tmp.dex_scale = right.dex_scale;
+		tmp.str_scale = right.str_scale;
+		return tmp;
+	}
 	friend Character;
 	friend Warrior;
 };
@@ -26,7 +75,9 @@ protected:
 	int level;
 	Weapon weapon;
 	Armor armor;
+	Character();
 
+public:
 	virtual void level_up();
 	void equip_weapon(const Weapon& _weapon) { weapon = _weapon; }
 	void equip_armor(const Armor& _armor) { armor = _armor; }
@@ -65,9 +116,9 @@ class Warrior : Character {
 		}
 	}
 	void wounded(Character& enemy) {
+		int dmg;
 		if (1 + rand() % 101 > dexterity) {
-			int damage;
-			damage = enemy.attack();
+			dmg = enemy.weapon.damage(enemy.strength, enemy.dexterity);
 		}
 	}
 };
