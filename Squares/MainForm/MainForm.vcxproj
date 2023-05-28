@@ -107,7 +107,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\itmm-2213-a\source\repos\Kok\TerminalClass\Squares\Rational;C:\Users\itmm-2213-a\source\repos\Kok\TerminalClass\Squares\CTriangle</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Visual Studio 2022\repos\TerminalClass\Squares\CTriangle;E:\Visual Studio 2022\repos\TerminalClass\Squares\Rational</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
