@@ -1,6 +1,3 @@
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
 #include "Pred.h"
 
 
@@ -88,8 +85,8 @@ std::string FIO::get_surname() const {
 std::string FIO::get_name() const {
 	return name;
 }
-std::string FIO::get_surname() const {
-	return surname;
+std::string FIO::get_secondname() const {
+	return secondname;
 }
 
 
@@ -146,6 +143,7 @@ Worker::Worker() {
 	salary = 0;
 	annual_load = 0;
 	post_name = "";
+	experience = 0;
 }
 Worker::Worker(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int experience) {
 	fio = _fio;
@@ -156,7 +154,184 @@ Worker::Worker(FIO _fio, std::string _post_name, float _salary, int _annual_load
 	experience = experience;
 }
 Worker::Worker(const Worker& _post) {
+	fio = _post.fio;
 	post_name = _post.post_name;
 	salary = _post.salary;
 	annual_load = _post.annual_load;
+	start_work_date = _post.start_work_date;
+	experience = _post.experience;
+}
+
+
+
+Date::Date() {
+	day = 1;
+	month = 1;
+	year = 1950;
+}
+Date::Date(int _day, int _month, int _year) {
+	if ((_day > 0 && _month > 0 && _year > 0) && (_day < 32 && _month < 13)) {
+		if ((_month == 1 || _month == 3 || _month == 5 || _month == 7 || _month == 8 || _month == 10 || _month == 12) && _day <= 31) {
+			day = _day;
+			month = _month;
+			year = _year;
+		}
+		if ((_month == 4 || _month == 6 || _month == 9 || _month == 11) && _day <= 30) {
+			day = _day;
+			month = _month;
+			year = _year;
+		}
+		if ((_month == 2 && _year % 4 == 0 && _day <= 29) || (_month == 2 && _year % 4 != 0 && _day <= 28)) {
+			day = _day;
+			month = _month;
+			year = _year;
+		}
+	}
+	else {
+		throw std::logic_error("invalid date");
+	}
+	
+}
+Date::Date(const Date& _date) {
+	day = _date.day;
+	month = _date.month;
+	year = _date.year;
+}
+bool Date::operator>(const Date& _date) const {
+	if (year > _date.year) { return true; }
+	if (year < _date.year) { return false; }
+	if (month > _date.month) { return true; }
+	if (month < _date.month) { return false; }
+	if (day > _date.day) { return true; }
+	if (day < _date.day) { return false; }
+	return false;
+	
+}
+Date& Date::operator=(const Date& _date) {
+	if (this != &_date) {
+		day = _date.day;
+		month = _date.month;
+		year = _date.year;
+	}
+	return *this;
+}
+bool Date::operator==(const Date& _date) const {
+	return day == _date.day && month == _date.month && year == _date.year;
+}
+void Date::swap(Date& _date) {
+	std::swap(day, _date.day);
+	std::swap(month, _date.month);
+	std::swap(year, _date.year);
+}
+
+
+
+Teacher::Teacher() {};
+Teacher::Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int _experience, std::string _title) {
+	fio = _fio;
+	post_name = _post_name;
+	salary = _salary;
+	annual_load = _annual_load;
+	start_work_date = _start_work;
+	experience = _experience;
+	scientific_title = _title;
+}
+void Teacher::swap(Teacher& _teacher) {
+	fio.swap(_teacher.fio);
+	std::swap(post_name, _teacher.post_name);
+	std::swap(salary, _teacher.salary);
+	std::swap(annual_load, _teacher.annual_load);
+	start_work_date.swap(_teacher.start_work_date);
+	std::swap(experience, _teacher.experience);
+	std::swap(scientific_title, _teacher.scientific_title);
+}
+
+
+Department::Department() {
+	teachers = NULL;
+	count = 0;
+	head_departmens = NULL;
+}
+void Department::add_teacher(const Teacher& teacher) {
+	Teacher* tmp_mass = new Teacher[count + 1];
+	for (int i = 0; i < count; i++) { tmp_mass[i] = teachers[i]; }
+	tmp_mass[count] = teacher;
+	delete[] teachers;
+	teachers = tmp_mass;
+	count++;
+}
+void Department::sort_fio() {
+	int left = 0;
+	int right = count - 1;
+	while (left <= right) {
+		for (int i = right; i > left; --i) {
+			if (teachers[i - 1].fio > teachers[i].fio) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		++left;
+		for (int i = left; i < right; ++i) {
+			if (teachers[i - 1].fio > teachers[i].fio) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		--right;
+	}
+}
+void Department::sort_post_name() {
+	int left = 0;
+	int right = count - 1;
+	while (left <= right) {
+		for (int i = right; i > left; --i) {
+			if (teachers[i - 1].post_name > teachers[i].post_name) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		++left;
+		for (int i = left; i < right; ++i) {
+			if (teachers[i - 1].post_name > teachers[i].post_name) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		--right;
+	}
+}
+void Department::sort_start_work() {
+	int left = 0;
+	int right = count - 1;
+	while (left <= right) {
+		for (int i = right; i > left; --i) {
+			if (teachers[i - 1].start_work_date > teachers[i].start_work_date) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		++left;
+		for (int i = left; i < right; ++i) {
+			if (teachers[i - 1].start_work_date > teachers[i].start_work_date) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		--right;
+	}
+}
+void Department::sort_annual() {
+	int left = 0;
+	int right = count - 1;
+	while (left <= right) {
+		for (int i = right; i > left; --i) {
+			if (teachers[i - 1].annual_load > teachers[i].annual_load) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		++left;
+		for (int i = left; i < right; ++i) {
+			if (teachers[i - 1].annual_load > teachers[i].annual_load) {
+				teachers[i - 1].swap(teachers[i]);
+			}
+		}
+		--right;
+	}
+}
+Department::~Department() {
+	delete[] teachers;
 }

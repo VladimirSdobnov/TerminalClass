@@ -10,7 +10,6 @@ public:
 	FIO();
 	FIO(std::string _surname, std::string _name, std::string _secondname);
 	FIO(const FIO& _sns);
-private:
 	void swap(FIO& _sns);
 public:
 	FIO& operator=(const FIO& _sns);
@@ -26,7 +25,7 @@ public:
 	void set_secondname(const std::string _secondname);
 	std::string get_surname() const;
 	std::string get_name() const;
-	std::string get_surname() const;
+	std::string get_secondname() const;
 };
 
 class Contact_details {
@@ -50,6 +49,22 @@ private:
 	Contact_details& operator=(const Contact_details& _contact);
 };
 
+class Date {
+	int day;
+	int month;
+	int year;
+	void swap(Date& _date);
+public:
+	Date();
+	Date(int _day, int _month, int _year);
+	Date(const Date& _date);
+	bool operator>(const Date& _date) const;
+	Date& operator=(const Date& _date);
+	bool operator==(const Date& _sns) const;
+	friend class Department;
+	friend class Teacher;
+};
+
 class Worker {
 protected:
 	FIO fio;
@@ -65,24 +80,13 @@ public:
 	Worker(const Worker& _post);
 };
 
-class Date {
-	int day;
-	int month;
-	int year;
-public:
-	Date();
-	Date(int _day, int _month, int _year);
-	Date(const Date& _date);
-	bool operator>(const Date& _date) const;
-	Date& operator=(const Date& _date);
-	bool operator==(const Date& _sns) const;
-};
-
 class Teacher : Worker {
 	std::string scientific_title;
 public:
 	Teacher();
 	Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int experience, std::string title);
+	friend class Department;
+	void swap(Teacher& teacher);
 };
 
 class Department {
@@ -92,12 +96,13 @@ class Department {
 	Contact_details departmens_contact;
 public:
 	Department();
-	Department(const Department& _dep);
+	//Department(const Department& _dep);
 	void sort_fio();
 	void sort_post_name();
 	void sort_start_work();
 	void sort_annual();
 	void add_teacher(const Teacher& teacher);
-	Teacher found_name(const FIO& fio);
-	Teacher* found_post(const std::string post);
+	//Teacher found_name(const FIO& fio);
+	//Teacher* found_post(const std::string post);
+	~Department();
 };
