@@ -1,4 +1,5 @@
-﻿  Source.cpp
+﻿  Pred.cpp
+  Source.cpp
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(5,52): warning C4305: аргумент: усечение из "double" в "float"
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(6,52): warning C4305: аргумент: усечение из "double" в "float"
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(7,52): warning C4305: аргумент: усечение из "double" в "float"
@@ -9,4 +10,5 @@ E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(11,52): warnin
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(12,52): warning C4305: аргумент: усечение из "double" в "float"
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(13,52): warning C4305: аргумент: усечение из "double" в "float"
 E:\Visual Studio 2022\repos\TerminalClass\Predmet\Pred\Source.cpp(14,53): warning C4305: аргумент: усечение из "double" в "float"
+  Создание кода...
   Pred.vcxproj -> E:\Visual Studio 2022\repos\TerminalClass\Predmet\Debug\Pred.exe

@@ -227,7 +227,7 @@ void Date::swap(Date& _date) {
 
 
 Teacher::Teacher() {};
-Teacher::Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int _experience, std::string _title) {
+Teacher::Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int _experience, std::string _title, Contact_details _details) {
 	fio = _fio;
 	post_name = _post_name;
 	salary = _salary;
@@ -235,6 +235,7 @@ Teacher::Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_lo
 	start_work_date = _start_work;
 	experience = _experience;
 	scientific_title = _title;
+	contact = _details;
 }
 void Teacher::swap(Teacher& _teacher) {
 	fio.swap(_teacher.fio);
@@ -334,4 +335,20 @@ void Department::sort_annual() {
 }
 Department::~Department() {
 	delete[] teachers;
+}
+
+std::string split(std::string& string, char del) {
+	std::string tmp = "";
+	int i = 0;
+	while (string[i] != del && i < string.length()) {
+		tmp = tmp + string[i];
+		i++;
+	}
+	if (i + 1 < string.length()) {
+		string = string.substr(i + 1);
+	}
+	else {
+		string = string.substr(i);
+	}
+	return tmp;
 }

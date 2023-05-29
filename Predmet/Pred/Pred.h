@@ -44,9 +44,9 @@ public:
 	std::string get_phone_number() const;
 	std::string get_email() const;
 	std::string get_adress() const;
+	Contact_details& operator=(const Contact_details& _contact);
 private:
 	void swap(Contact_details& _contact);
-	Contact_details& operator=(const Contact_details& _contact);
 };
 
 class Date {
@@ -82,9 +82,10 @@ public:
 
 class Teacher : Worker {
 	std::string scientific_title;
+	Contact_details contact;
 public:
 	Teacher();
-	Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int experience, std::string title);
+	Teacher(FIO _fio, std::string _post_name, float _salary, int _annual_load, Date _start_work, int experience, std::string title, Contact_details _contact);
 	friend class Department;
 	void swap(Teacher& teacher);
 };
@@ -106,3 +107,6 @@ public:
 	//Teacher* found_post(const std::string post);
 	~Department();
 };
+
+
+std::string split(std::string& string, char del);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Rational.h"
 #include "Pred.h"
+#include <msclr\marshal_cppstd.h>
 
 namespace CppCLRWinformsProjekt {
 
@@ -37,30 +38,51 @@ namespace CppCLRWinformsProjekt {
 			}
 		}
 	private: System::Windows::Forms::GroupBox^ groupBox1;
+	private: System::Windows::Forms::Label^ Annual_label;
 	protected:
-	private: System::Windows::Forms::Label^ label4;
+
 	private: System::Windows::Forms::TextBox^ Salary_box;
 
 
 
 	private: System::Windows::Forms::TextBox^ Post_box;
 	private: System::Windows::Forms::TextBox^ FIO_box;
+	private: System::Windows::Forms::TextBox^ Annual_box;
 
 
 
-	private: System::Windows::Forms::TextBox^ textBox1;
+
 	private: System::Windows::Forms::Label^ Post_label;
 
 	private: System::Windows::Forms::Label^ FIO_lable;
+	private: System::Windows::Forms::Button^ sort_name_button;
 
 
 
 
-	private: System::Windows::Forms::Button^ plus;
-	private: System::Windows::Forms::Button^ minus;
+
+
+	private: System::Windows::Forms::Button^ add_button;
+
 	private: System::Windows::Forms::Button^ multiplicate;
 	private: System::Windows::Forms::Button^ divizion;
 	private: System::Windows::Forms::Label^ Salary_label;
+	private: System::Windows::Forms::TextBox^ experience_box;
+	private: System::Windows::Forms::TextBox^ date_box;
+	private: System::Windows::Forms::Label^ date_label;
+	private: System::Windows::Forms::Label^ experience_label;
+	private: System::Windows::Forms::Label^ phone_label;
+	private: System::Windows::Forms::Label^ email_label;
+	private: System::Windows::Forms::Label^ adres_label;
+	private: System::Windows::Forms::TextBox^ email_box;
+
+	private: System::Windows::Forms::TextBox^ phone_box;
+	private: System::Windows::Forms::TextBox^ adres_box;
+	private: System::Windows::Forms::TextBox^ title_box;
+
+	private: System::Windows::Forms::Label^ title_lable;
+
+
 
 
 	private:
@@ -77,34 +99,58 @@ namespace CppCLRWinformsProjekt {
 		void InitializeComponent(void)
 		{
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->adres_box = (gcnew System::Windows::Forms::TextBox());
+			this->email_box = (gcnew System::Windows::Forms::TextBox());
+			this->phone_box = (gcnew System::Windows::Forms::TextBox());
+			this->phone_label = (gcnew System::Windows::Forms::Label());
+			this->email_label = (gcnew System::Windows::Forms::Label());
+			this->adres_label = (gcnew System::Windows::Forms::Label());
+			this->experience_box = (gcnew System::Windows::Forms::TextBox());
+			this->date_box = (gcnew System::Windows::Forms::TextBox());
+			this->date_label = (gcnew System::Windows::Forms::Label());
+			this->experience_label = (gcnew System::Windows::Forms::Label());
+			this->Salary_label = (gcnew System::Windows::Forms::Label());
 			this->divizion = (gcnew System::Windows::Forms::Button());
-			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->Annual_label = (gcnew System::Windows::Forms::Label());
 			this->Salary_box = (gcnew System::Windows::Forms::TextBox());
 			this->Post_box = (gcnew System::Windows::Forms::TextBox());
 			this->FIO_box = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->Annual_box = (gcnew System::Windows::Forms::TextBox());
 			this->Post_label = (gcnew System::Windows::Forms::Label());
 			this->FIO_lable = (gcnew System::Windows::Forms::Label());
-			this->plus = (gcnew System::Windows::Forms::Button());
-			this->minus = (gcnew System::Windows::Forms::Button());
+			this->sort_name_button = (gcnew System::Windows::Forms::Button());
+			this->add_button = (gcnew System::Windows::Forms::Button());
 			this->multiplicate = (gcnew System::Windows::Forms::Button());
-			this->Salary_label = (gcnew System::Windows::Forms::Label());
+			this->title_lable = (gcnew System::Windows::Forms::Label());
+			this->title_box = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->title_box);
+			this->groupBox1->Controls->Add(this->title_lable);
+			this->groupBox1->Controls->Add(this->adres_box);
+			this->groupBox1->Controls->Add(this->email_box);
+			this->groupBox1->Controls->Add(this->phone_box);
+			this->groupBox1->Controls->Add(this->phone_label);
+			this->groupBox1->Controls->Add(this->email_label);
+			this->groupBox1->Controls->Add(this->adres_label);
+			this->groupBox1->Controls->Add(this->experience_box);
+			this->groupBox1->Controls->Add(this->date_box);
+			this->groupBox1->Controls->Add(this->date_label);
+			this->groupBox1->Controls->Add(this->experience_label);
 			this->groupBox1->Controls->Add(this->Salary_label);
 			this->groupBox1->Controls->Add(this->divizion);
-			this->groupBox1->Controls->Add(this->label4);
+			this->groupBox1->Controls->Add(this->Annual_label);
 			this->groupBox1->Controls->Add(this->Salary_box);
 			this->groupBox1->Controls->Add(this->Post_box);
 			this->groupBox1->Controls->Add(this->FIO_box);
-			this->groupBox1->Controls->Add(this->textBox1);
+			this->groupBox1->Controls->Add(this->Annual_box);
 			this->groupBox1->Controls->Add(this->Post_label);
 			this->groupBox1->Controls->Add(this->FIO_lable);
-			this->groupBox1->Controls->Add(this->plus);
-			this->groupBox1->Controls->Add(this->minus);
+			this->groupBox1->Controls->Add(this->sort_name_button);
+			this->groupBox1->Controls->Add(this->add_button);
 			this->groupBox1->Controls->Add(this->multiplicate);
 			this->groupBox1->Location = System::Drawing::Point(9, 10);
 			this->groupBox1->Margin = System::Windows::Forms::Padding(2);
@@ -115,26 +161,129 @@ namespace CppCLRWinformsProjekt {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Главное меню";
 			// 
+			// adres_box
+			// 
+			this->adres_box->Location = System::Drawing::Point(238, 67);
+			this->adres_box->Margin = System::Windows::Forms::Padding(2);
+			this->adres_box->Name = L"adres_box";
+			this->adres_box->Size = System::Drawing::Size(104, 20);
+			this->adres_box->TabIndex = 25;
+			// 
+			// email_box
+			// 
+			this->email_box->Location = System::Drawing::Point(130, 67);
+			this->email_box->Margin = System::Windows::Forms::Padding(2);
+			this->email_box->Name = L"email_box";
+			this->email_box->Size = System::Drawing::Size(104, 20);
+			this->email_box->TabIndex = 24;
+			// 
+			// phone_box
+			// 
+			this->phone_box->Location = System::Drawing::Point(22, 67);
+			this->phone_box->Margin = System::Windows::Forms::Padding(2);
+			this->phone_box->Name = L"phone_box";
+			this->phone_box->Size = System::Drawing::Size(104, 20);
+			this->phone_box->TabIndex = 23;
+			this->phone_box->TextChanged += gcnew System::EventHandler(this, &Form1::textBox1_TextChanged_1);
+			// 
+			// phone_label
+			// 
+			this->phone_label->AutoSize = true;
+			this->phone_label->Location = System::Drawing::Point(43, 52);
+			this->phone_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->phone_label->Name = L"phone_label";
+			this->phone_label->Size = System::Drawing::Size(52, 13);
+			this->phone_label->TabIndex = 22;
+			this->phone_label->Text = L"Телефон";
+			// 
+			// email_label
+			// 
+			this->email_label->AutoSize = true;
+			this->email_label->Location = System::Drawing::Point(174, 52);
+			this->email_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->email_label->Name = L"email_label";
+			this->email_label->Size = System::Drawing::Size(34, 13);
+			this->email_label->TabIndex = 21;
+			this->email_label->Text = L"e-mail";
+			this->email_label->Click += gcnew System::EventHandler(this, &Form1::email_label_Click);
+			// 
+			// adres_label
+			// 
+			this->adres_label->AutoSize = true;
+			this->adres_label->Location = System::Drawing::Point(273, 52);
+			this->adres_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->adres_label->Name = L"adres_label";
+			this->adres_label->Size = System::Drawing::Size(38, 13);
+			this->adres_label->TabIndex = 20;
+			this->adres_label->Text = L"Адрес";
+			this->adres_label->Click += gcnew System::EventHandler(this, &Form1::adres_label_Click);
+			// 
+			// experience_box
+			// 
+			this->experience_box->Location = System::Drawing::Point(561, 30);
+			this->experience_box->Margin = System::Windows::Forms::Padding(2);
+			this->experience_box->Name = L"experience_box";
+			this->experience_box->Size = System::Drawing::Size(111, 20);
+			this->experience_box->TabIndex = 19;
+			// 
+			// date_box
+			// 
+			this->date_box->Location = System::Drawing::Point(446, 30);
+			this->date_box->Margin = System::Windows::Forms::Padding(2);
+			this->date_box->Name = L"date_box";
+			this->date_box->Size = System::Drawing::Size(111, 20);
+			this->date_box->TabIndex = 18;
+			// 
+			// date_label
+			// 
+			this->date_label->AutoSize = true;
+			this->date_label->Location = System::Drawing::Point(446, 15);
+			this->date_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->date_label->Name = L"date_label";
+			this->date_label->Size = System::Drawing::Size(111, 13);
+			this->date_label->TabIndex = 17;
+			this->date_label->Text = L"Дата начала работы";
+			// 
+			// experience_label
+			// 
+			this->experience_label->AutoSize = true;
+			this->experience_label->Location = System::Drawing::Point(580, 15);
+			this->experience_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->experience_label->Name = L"experience_label";
+			this->experience_label->Size = System::Drawing::Size(74, 13);
+			this->experience_label->TabIndex = 16;
+			this->experience_label->Text = L"Опыт работы";
+			// 
+			// Salary_label
+			// 
+			this->Salary_label->AutoSize = true;
+			this->Salary_label->Location = System::Drawing::Point(264, 15);
+			this->Salary_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->Salary_label->Name = L"Salary_label";
+			this->Salary_label->Size = System::Drawing::Size(55, 13);
+			this->Salary_label->TabIndex = 15;
+			this->Salary_label->Text = L"Зарплата";
+			// 
 			// divizion
 			// 
-			this->divizion->Location = System::Drawing::Point(199, 283);
+			this->divizion->Location = System::Drawing::Point(323, 105);
 			this->divizion->Margin = System::Windows::Forms::Padding(2);
 			this->divizion->Name = L"divizion";
-			this->divizion->Size = System::Drawing::Size(44, 20);
+			this->divizion->Size = System::Drawing::Size(103, 37);
 			this->divizion->TabIndex = 14;
 			this->divizion->Text = L"/";
 			this->divizion->UseVisualStyleBackColor = true;
 			this->divizion->Click += gcnew System::EventHandler(this, &Form1::divizion_Click);
 			// 
-			// label4
+			// Annual_label
 			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(4, 91);
-			this->label4->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(62, 13);
-			this->label4->TabIndex = 12;
-			this->label4->Text = L"Результат:";
+			this->Annual_label->AutoSize = true;
+			this->Annual_label->Location = System::Drawing::Point(344, 15);
+			this->Annual_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->Annual_label->Name = L"Annual_label";
+			this->Annual_label->Size = System::Drawing::Size(98, 13);
+			this->Annual_label->TabIndex = 12;
+			this->Annual_label->Text = L"Годовая нагрузка";
 			// 
 			// Salary_box
 			// 
@@ -161,14 +310,14 @@ namespace CppCLRWinformsProjekt {
 			this->FIO_box->Size = System::Drawing::Size(126, 20);
 			this->FIO_box->TabIndex = 7;
 			// 
-			// textBox1
+			// Annual_box
 			// 
-			this->textBox1->Location = System::Drawing::Point(128, 436);
-			this->textBox1->Margin = System::Windows::Forms::Padding(2);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(48, 20);
-			this->textBox1->TabIndex = 6;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &Form1::textBox1_TextChanged);
+			this->Annual_box->Location = System::Drawing::Point(338, 30);
+			this->Annual_box->Margin = System::Windows::Forms::Padding(2);
+			this->Annual_box->Name = L"Annual_box";
+			this->Annual_box->Size = System::Drawing::Size(104, 20);
+			this->Annual_box->TabIndex = 6;
+			this->Annual_box->TextChanged += gcnew System::EventHandler(this, &Form1::textBox1_TextChanged);
 			// 
 			// Post_label
 			// 
@@ -192,48 +341,57 @@ namespace CppCLRWinformsProjekt {
 			this->FIO_lable->Text = L"ФИО";
 			this->FIO_lable->Click += gcnew System::EventHandler(this, &Form1::label1_Click);
 			// 
-			// plus
+			// sort_name_button
 			// 
-			this->plus->Location = System::Drawing::Point(51, 283);
-			this->plus->Margin = System::Windows::Forms::Padding(2);
-			this->plus->Name = L"plus";
-			this->plus->Size = System::Drawing::Size(44, 20);
-			this->plus->TabIndex = 2;
-			this->plus->Text = L"+";
-			this->plus->UseVisualStyleBackColor = true;
-			this->plus->Click += gcnew System::EventHandler(this, &Form1::plus_Click);
+			this->sort_name_button->Location = System::Drawing::Point(108, 105);
+			this->sort_name_button->Margin = System::Windows::Forms::Padding(2);
+			this->sort_name_button->Name = L"sort_name_button";
+			this->sort_name_button->Size = System::Drawing::Size(104, 37);
+			this->sort_name_button->TabIndex = 2;
+			this->sort_name_button->Text = L"Сортировать по имени";
+			this->sort_name_button->UseVisualStyleBackColor = true;
+			this->sort_name_button->Click += gcnew System::EventHandler(this, &Form1::sort_name_button_Click);
 			// 
-			// minus
+			// add_button
 			// 
-			this->minus->Location = System::Drawing::Point(132, 283);
-			this->minus->Margin = System::Windows::Forms::Padding(2);
-			this->minus->Name = L"minus";
-			this->minus->Size = System::Drawing::Size(44, 20);
-			this->minus->TabIndex = 1;
-			this->minus->Text = L"-";
-			this->minus->UseVisualStyleBackColor = true;
-			this->minus->Click += gcnew System::EventHandler(this, &Form1::minus_Click);
+			this->add_button->Location = System::Drawing::Point(0, 105);
+			this->add_button->Margin = System::Windows::Forms::Padding(2);
+			this->add_button->Name = L"add_button";
+			this->add_button->Size = System::Drawing::Size(104, 37);
+			this->add_button->TabIndex = 1;
+			this->add_button->Text = L"Добавить запись";
+			this->add_button->UseVisualStyleBackColor = true;
+			this->add_button->Click += gcnew System::EventHandler(this, &Form1::add_button_Click);
 			// 
 			// multiplicate
 			// 
-			this->multiplicate->Location = System::Drawing::Point(267, 282);
+			this->multiplicate->Location = System::Drawing::Point(216, 105);
 			this->multiplicate->Margin = System::Windows::Forms::Padding(2);
 			this->multiplicate->Name = L"multiplicate";
-			this->multiplicate->Size = System::Drawing::Size(44, 21);
+			this->multiplicate->Size = System::Drawing::Size(103, 37);
 			this->multiplicate->TabIndex = 0;
 			this->multiplicate->Text = L"*";
 			this->multiplicate->UseVisualStyleBackColor = true;
 			this->multiplicate->Click += gcnew System::EventHandler(this, &Form1::multiplicate_Click);
 			// 
-			// Salary_label
+			// title_lable
 			// 
-			this->Salary_label->AutoSize = true;
-			this->Salary_label->Location = System::Drawing::Point(264, 15);
-			this->Salary_label->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->Salary_label->Name = L"Salary_label";
-			this->Salary_label->Size = System::Drawing::Size(55, 13);
-			this->Salary_label->TabIndex = 15;
-			this->Salary_label->Text = L"Зарплата";
+			this->title_lable->AutoSize = true;
+			this->title_lable->Location = System::Drawing::Point(382, 52);
+			this->title_lable->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->title_lable->Name = L"title_lable";
+			this->title_lable->Size = System::Drawing::Size(88, 13);
+			this->title_lable->TabIndex = 26;
+			this->title_lable->Text = L"Ученая степень";
+			this->title_lable->Click += gcnew System::EventHandler(this, &Form1::title_lable_Click);
+			// 
+			// title_box
+			// 
+			this->title_box->Location = System::Drawing::Point(346, 67);
+			this->title_box->Margin = System::Windows::Forms::Padding(2);
+			this->title_box->Name = L"title_box";
+			this->title_box->Size = System::Drawing::Size(154, 20);
+			this->title_box->TabIndex = 27;
 			// 
 			// Form1
 			// 
@@ -250,7 +408,7 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-	private: System::Void plus_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void sort_name_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
 			textBox4->Text == "")
 			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
@@ -275,17 +433,14 @@ namespace CppCLRWinformsProjekt {
 			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
 		}
 	}
-	private: System::Void minus_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" ||
-			textBox4->Text == "")
-			MessageBox::Show(this, "Числа не указанны!", "Сообщение",
+	private: System::Void add_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (FIO_box->Text == "")
+			MessageBox::Show(this, "Укажите имя!", "Сообщение",
 				MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		else {
-			Rational A(int::Parse(textBox1->Text), int::Parse(textBox2->Text));
-			Rational B(int::Parse(textBox3->Text), int::Parse(textBox4->Text));
-			Rational Res = A - B;
-
-			label4->Text = "Результат: " + (Res.get_numerator()).ToString() + "/" + (Res.get_denominator().ToString());
+			std::string fio_string = msclr::interop::marshal_as<std::string>(FIO_box->Text);
+			std::string date_string = msclr::interop::marshal_as<std::string>(date_box->Text);
+			
 		}
 	}
 	private: System::Void divizion_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -311,5 +466,13 @@ private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e)
 }
 
 
+private: System::Void email_label_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void adres_label_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void textBox1_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void title_lable_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
